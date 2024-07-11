@@ -36,12 +36,4 @@ print(dfCurrentWeatherConditions.head)
 print(dfDailyForecast.head)
 print(dfHourlyForecast.head)
 
-# establish connections 
-#conn_string = 'postgres://postgres:pass@127.0.0.1/Weather_v2'
-#conn_string = "host='localhost' dbname='Weather_v2' user='python' password='Trustno1@all'"
-#  
-#db = create_engine(conn_string) 
-#conn = db.connect() 
-#
-#print(conn)
 
