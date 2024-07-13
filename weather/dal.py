@@ -20,35 +20,5 @@ class dal:
         engine = create_engine(connection_str)
         return engine
     
-    def putWeatherJson(self, wj, engine):
-        self.wj = wj
-        self.engine = engine
 
-    def getLocation(self, engine):
-        self.engine = engine
-
-    def getCurrentConditions(self, engine):
-        self.engine = engine
-
-    def getDailyForecast(self, engine):
-        self.engine = engine
-
-
-    def getHourlyForecast(self, engine):
-        self.engine = engine
-
-
-    def putLocation(self, engine):
-        self.engine = engine
-        
-
-    def putCurrentConditions(self, engine):
-        self.engine = engine
-        
-
-    def putDailyForecast(self, engine):
-        self.engine = engine    
-
-    def putHourlyForecast(self, engine):
-        self.engine = engine
     
