@@ -352,23 +352,8 @@ class Weather:
             self.wj = wj
             self.engine = engine
 
-        def getLocation(self, engine):
-            self.engine = engine
-
-        def getCurrentConditions(self, engine):
-            self.engine = engine
-
-        def getDailyForecast(self, engine):
-            self.engine = engine
-
-
-        def getHourlyForecast(self, engine):
-            self.engine = engine
-
-
         def putLocation(self, engine):
             self.engine = engine
-            
 
         def putCurrentConditions(self, engine):
             self.engine = engine
