@@ -1,6 +1,10 @@
-import sqlalchemy
+import sqlalchemy as sa
 from sqlalchemy import create_engine
 from sqlalchemy.engine import URL
+import pyodbc
+import pandas as pd 
+import warnings
+warnings.filterwarnings('ignore')
 
 ######## Engine Configurations #############
 #Postgresql
@@ -32,12 +36,45 @@ from sqlalchemy.engine import URL
 ######## Engine Configurations #############
 
 url_object = URL.create(
-    "postgresql+pg8000",
+    "postgresql",
     username="python",
     password="Trustno1@all",  # plain (unescaped) text
     host="localhost",
-    database="Weather_v2",
+    database="dvdrental",
 )
 
 engine = create_engine(url_object)
+# connection = engine.raw_connection
+
+
+# sql_df = pd.read_sql("select * from location",
+#     con=engine)
+
+# print(sql_df)
+
+title = '''Freaky Pocus'''
+print(title)
+
+sql = f"select * from public.get_film_rentals('{title}')"
+with engine.begin() as conn:
+    df1 = pd.read_sql(sa.text(sql), conn)
+print(df1)
+
+
+
+# try: 
+#     with engine.connect() as connection_str:
+#         print('Successfully connected to the PostgreSQL database')
+# except Exception as ex:
+#     print('Failed to connect: {ex}')
+
+server = 'mylaptop'
+database = 'Weather_v2'
+connection_str = f'DRIVER=ODBC Driver 17 for SQL Server;SERVER={server};DATABASE={database};Trusted_Connection=yes;TrustServerCertificate=yes;'
+
+connection = pyodbc.connect(connection_str)
+query = "SELECT * FROM location"
+df = pd.read_sql(query, connection)
+print(df)
+
 
