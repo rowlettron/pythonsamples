@@ -55,7 +55,8 @@ engine = create_engine(url_object)
 title = '''Freaky Pocus'''
 print(title)
 
-sql = f"select * from public.get_film_rentals('{title}')"
+# sql = f"select * from public.get_film_rentals('{title}')"
+sql = f"select * from public.get_film_rentals()"
 with engine.begin() as conn:
     df1 = pd.read_sql(sa.text(sql), conn)
 print(df1)
