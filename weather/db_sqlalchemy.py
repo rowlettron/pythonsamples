@@ -79,3 +79,9 @@ df = pd.read_sql(query, connection)
 print(df)
 
 
+#Trustno1%40all
+#import sqlalchemy as sa
+#from sqlalchemy import create_engine
+#import pandas as pd
+#constr = "postgresql://python:Trustno1%40all@localhost/dvdrental"
+#engine = create_engine(constr)
