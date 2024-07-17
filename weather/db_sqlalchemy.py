@@ -69,6 +69,22 @@ print(df1)
 # except Exception as ex:
 #     print('Failed to connect: {ex}')
 
+credentials = {
+    'username': 'scott',
+    'password': 'tiger',
+    'host': 'myhost',
+    'database': 'databasename',
+    'port': '1560'}
+    
+connect_url = URL.create(
+    'mssql',
+    username=credentials['username'],
+    password=credentials['password'],
+    host=credentials['host'],
+    port=credentials['port'],
+    database=credentials['database'],
+    query=dict(driver='ODBC Driver 17 for SQL Server'))
+
 server = 'mylaptop'
 database = 'Weather_v2'
 connection_str = f'DRIVER=ODBC Driver 17 for SQL Server;SERVER={server};DATABASE={database};Trusted_Connection=yes;TrustServerCertificate=yes;'
