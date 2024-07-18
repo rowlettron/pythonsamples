@@ -1,10 +1,9 @@
 import sqlalchemy as sa 
 from sqlalchemy import create_engine
 from sqlalchemy import URL
-# import keyring as kr 
-#import pyodbc
-#import pymssql
 import os
+import warnings
+warnings.filterwarnings('ignore')
 
 #MSSQL
 #connstr = f"mssql://python:Trustno1%40all@mylaptop/Weather_v2?driver=ODBC Driver 17 for SQL Server"
@@ -54,5 +53,13 @@ class DataAccess:
         engine = create_engine(connect_url) 
         return engine
     
+    def callStoredProcedure(self, engine, sql):
+        if self.dbType == 'postgres':
+            
+            with engine.connect() as conn:
+                conn.execute(sql)
+
+
+
 
     

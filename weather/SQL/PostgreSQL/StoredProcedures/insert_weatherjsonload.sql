@@ -1,5 +1,5 @@
 
-CREATE OR REPLACE PROCEDURE public.insert_weatherjsonload(in_wj jsonb) --Do not remove parentheses
+CREATE OR REPLACE PROCEDURE public.insert_weatherjsonload(in_wj text) --Do not remove parentheses
 LANGUAGE plpgsql
 AS
 $$
@@ -21,6 +21,7 @@ BEGIN
 
 	INSERT INTO public.weatherjsonload(jsondata)
 	VALUES (wj);
+
 END;
 
 $$

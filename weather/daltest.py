@@ -2,6 +2,24 @@ import dal as d
 import sqlalchemy as sa 
 import pandas as pd
 import os
+from sys import platform
+def clearConsole():
+    if os.name in ('nt','dos'):
+        command = 'cls'
+    else:
+        command = 'clear'
+
+    os.system(command)
+
+# print(platform.system)
+
+if platform == "darwin":
+    os_platform = "Mac"
+    clearConsole()
+else:
+    os_platform = "Windows"
+    clearConsole()
+
 
 mssql = 'MSSQL'
 postgres = 'postgres'
