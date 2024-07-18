@@ -19,3 +19,14 @@ with engine.begin() as conn:
     df1 = pd.read_sql(sa.text(sql), conn)
 print(df1)
 
+print('***************************************************************************************************************************************************')
+
+pconn = d.DataAccess()
+engine = pconn.getConnection(dbType = postgres)
+
+# print(msengine)
+
+sql = f"select * from location"
+with engine.begin() as conn:
+    df1 = pd.read_sql(sa.text(sql), conn)
+print(df1)
