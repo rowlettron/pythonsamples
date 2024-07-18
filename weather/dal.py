@@ -1,8 +1,10 @@
 import sqlalchemy as sa 
 from sqlalchemy import create_engine
+from sqlalchemy import URL
 # import keyring as kr 
-import pyodbc
-import pymssql
+#import pyodbc
+#import pymssql
+import os
 
 #MSSQL
 #connstr = f"mssql://python:Trustno1%40all@mylaptop/Weather_v2?driver=ODBC Driver 17 for SQL Server"
@@ -10,15 +12,21 @@ import pymssql
 #PostgreSQL
 #connstr = "postgresql://python:Trustno1%40all@localhost/dvdrental"
 
-class dal:
+class DataAccess:
 
-    def __init__(self, dbType, pwd):
-        self.dbType = dbType
-        self.user = 'python'
-        self.pwd = pwd
+    def __init__(self):
+        #self.dbType = dbType
+        self.user = os.environ['WEATHER_LOGIN']
+        self.pwd = os.environ['WEATHER_PWD']
         self.db = 'Weather_v2'
 
-    def getConnection(self):
+    def printHelp(self):
+        print('Help')
+        return 'Help'
+    
+    def getConnection(self, dbType):
+
+        self.dbType = dbType
         if self.dbType == 'MSSQL':
            self.host = 'mylaptop'
            self.port = '1433'

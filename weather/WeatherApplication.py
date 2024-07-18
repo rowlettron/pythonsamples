@@ -1,6 +1,7 @@
 import argparse
 import psycopg2 
 import pandas as pd 
+import os
 from sqlalchemy import create_engine 
 
 import Weather as w
@@ -9,17 +10,20 @@ import dal as d
 
 parser=argparse.ArgumentParser(description="sample argument parser")
 parser.add_argument('zipcode')
+parser.add_argument('dbType')
 args=parser.parse_args()
 
 zipcode = args.zipcode
-# print(zipcode)
-secureObject = s.security()
+dbType = args.dbType
 
-apiUrl = 'weatherapi-com.p.rapidapi.com'
-key = secureObject.getWeatherKey()
-host = secureObject.getWeatherHost()
-pwd = secureObject.getPassword()
-conn = d.dal(pwd)
+# print(zipcode)
+# secureObject = s.security()
+
+apiUrl = os.environ['WEATHER_HOST']
+key = os.environ['WEATHER_KEY']
+#host = os.environ['WEATHER_HOST']
+# pwd = secureObject.getPassword()
+conn = d.dal(dbType)
 
 
 
@@ -30,7 +34,7 @@ conn = d.dal(pwd)
 #         }
 headers = {
         'X-RapidAPI-Key': key,
-        'X-RapidAPI-Host': host
+        'X-RapidAPI-Host': apiUrl
         }
 
 weatherData = w.Weather(zipcode)

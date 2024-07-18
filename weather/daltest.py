@@ -1,19 +1,21 @@
-import dal 
+import dal as d
 import sqlalchemy as sa 
-import keyring
+import pandas as pd
+import os
 
 mssql = 'MSSQL'
 postgres = 'postgres'
-pwd = keyring.get_password('weather','python')
+pwd = os.environ['WEATHER_PWD']
 
 print(pwd)
 
+conn = d.DataAccess()
+engine = conn.getConnection(dbType = mssql)
 
-msconnection = dal(mssql, pwd)
-msengine = dal.getConnection()
+# print(msengine)
 
-sql = f"select * from public.get_film_rentals()"
-with msengine.begin() as conn:
+sql = f"select * from location"
+with engine.begin() as conn:
     df1 = pd.read_sql(sa.text(sql), conn)
 print(df1)
 
