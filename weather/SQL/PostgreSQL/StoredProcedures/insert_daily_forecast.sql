@@ -44,7 +44,8 @@ BEGIN
            position
     FROM public.weatherjsonload wjl
     CROSS JOIN jsonb_array_elements(jsondata -> 'forecast' -> 'forecastday') WITH ordinality arr(item_object, position)
-    INNER JOIN public.location l ON wjl.jsondata -> 'location' ->> 'name' = l."name"; 
+    INNER JOIN public.location l ON wjl.jsondata -> 'location' ->> 'name' = l."name"
+	WHERE wjl.Processed = 0; 
 
     MERGE INTO public.dailyforecast AS t 
 

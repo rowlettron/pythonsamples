@@ -1,4 +1,4 @@
-CREATE OR REPLACE PROCEDURE insert_location()
+CREATE OR REPLACE PROCEDURE insert_location(inPostalCode varchar(25))
 LANGUAGE plpgsql    
 AS $$
 /*************************************************************************************************
@@ -33,6 +33,7 @@ BEGIN
 
     WHEN MATCHED THEN
     UPDATE SET 
+	            postalcode = inPostalcode, 
                 name = s.name,
                 region = s.region,
                 country = s.country, 
@@ -40,18 +41,13 @@ BEGIN
                 longitude = s.longitude,
                 timezone = s.timezone,
                 localtime_epoch = s.localtime_epoch,
-                local_time = s.local_time
+                "localtime" = s.local_time
 
     WHEN NOT MATCHED THEN
-    INSERT (name, region, country, latitude, longitude, timezone, localtime_epoch, local_time)
-    VALUES (s.name, s.region, s.country, s.latitude, s.longitude, s.timezone, s.localtime_epoch, s.local_time)
+    INSERT (postalcode, name, region, country, latitude, longitude, timezone, localtime_epoch, "localtime")
+    VALUES (inPostalCode, s.name, s.region, s.country, s.latitude, s.longitude, s.timezone, s.localtime_epoch, s.local_time)
     ;
 	
-	UPDATE public.weatherjsonload
-	SET processed = 1,
-	   processed_date = now()
-    WHERE processed = 0;
-
     RAISE NOTICE 'Finished procedure insert_location';
 	
 	DELETE FROM public.location

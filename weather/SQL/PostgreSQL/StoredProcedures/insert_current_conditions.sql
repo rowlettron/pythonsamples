@@ -12,6 +12,7 @@ LANGUAGE plpgsql AS $$
  *  ----------    --------------------    ---------------------------------------------------------
  **************************************************************************************************/
 DECLARE dummyvariable varchar(50);
+        _countofrows int;
 BEGIN
     DROP TABLE IF EXISTS _current_conditions;
 
@@ -50,6 +51,10 @@ BEGIN
     INNER JOIN public.location l ON jsondata -> 'location' ->> 'name' = l."name"
     WHERE wjl.processed = 0;
 
+    GET DIAGNOSTICS _countofrows = ROW_COUNT;
+	RAISE NOTICE 'Temp table count: %', _countofrows;
+
+	
     MERGE INTO public.currentconditions AS t 
 
     USING _current_conditions AS s 

@@ -68,12 +68,4 @@ engine = conn.getConnection(dbType)
 sp = 'call copy_payload_to_table();'
 conn.callStoredProcedure(engine, sp)
 
-sp = "call public.insert_current_conditions();"
-conn.callStoredProcedure(engine, sp)
-
-sp = "call insert_location('" + zipcode + "');"
-conn.callStoredProcedure(engine, sp)
-
-sp = 'call update_json_to_processed();'
-conn.callStoredProcedure(engine, sp)
 

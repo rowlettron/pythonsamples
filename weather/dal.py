@@ -55,9 +55,13 @@ class DataAccess:
     
     def callStoredProcedure(self, engine, sql):
         if self.dbType == 'postgres':
-            
-            with engine.connect() as conn:
-                conn.execute(sql)
+            print(sql)
+            conn = engine.raw_connection()
+            cursor = conn.cursor()
+            cursor.execute(sql)
+            cursor.close()
+            conn.commit()
+            conn.close()
 
 
 
