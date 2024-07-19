@@ -62,6 +62,17 @@ class DataAccess:
             cursor.close()
             conn.commit()
             conn.close()
+        elif self.dbType == 'mssql':
+            print(sql)
+            conn = engine.raw_connection()
+            cursor = conn.cursor()
+            cursor.execute(sql)
+            cursor.close()
+            conn.commit()
+            conn.close()
+
+
+
 
 
 
