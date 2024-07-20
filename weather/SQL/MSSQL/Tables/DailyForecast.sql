@@ -1,43 +1,44 @@
-USE [Weather_v2]
+USE Weather_v2
 GO
 
-/****** Object:  Table [dbo].[DailyForecast]    Script Date: 7/3/2024 10:56:29 AM ******/
+/****** Object:  Table dbo.DailyForecast    Script Date: 7/3/2024 10:56:29 AM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE TABLE [dbo].[DailyForecast](
-    [DailyForecastID] [int] IDENTITY(1,1) NOT NULL,
-    [location_name] [nvarchar](255) NULL,
-    [date] [nvarchar](255) NULL,
-    [date_epoch] [float] NULL,
-    [maxtemp_c] [float] NULL,
-    [maxtemp_f] [float] NULL,
-    [mintemp_c] [float] NULL,
-    [mintemp_f] [float] NULL,
-    [avgtemp_c] [float] NULL,
-    [avgtemp_f] [float] NULL,
-    [maxwind_mph] [float] NULL,
-    [maxwind_kph] [float] NULL,
-    [totalprecip_mm] [float] NULL,
-    [totalprecip_in] [float] NULL,
-    [totalsnow_cm] [float] NULL,
-    [avgvis_km] [float] NULL,
-    [avgvis_miles] [nvarchar](255) NULL,
-    [avghumidity] [float] NULL,
-    [daily_will_it_rain] [float] NULL,
-    [daily_chance_of_rain] [float] NULL,
-    [daily_will_it_snow] [float] NULL,
-    [daily_chance_of_snow] [float] NULL,
-    [conditions] [nvarchar](255) NULL,
-    [avgmis_miles] [float] NULL,
- CONSTRAINT [PK_DailyForecast] PRIMARY KEY CLUSTERED 
-(
-    [DailyForecastID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
+DROP TABLE IF EXISTS dbo.DailyForecast;
+GO
+
+CREATE TABLE dbo.DailyForecast (
+    DailyForecastID INT IDENTITY(1, 1) NOT NULL,
+    LocationID INT NULL,
+    --location_name nvarchar(255) NULL,
+    DATE DATETIME NULL,
+    date_epoch INT NULL,
+    maxtemp_c NUMERIC(6, 2) NULL,
+    maxtemp_f NUMERIC(6, 2) NULL,
+    mintemp_c NUMERIC(6, 2) NULL,
+    mintemp_f NUMERIC(6, 2) NULL,
+    avgtemp_c NUMERIC(6, 2) NULL,
+    avgtemp_f NUMERIC(6, 2) NULL,
+    maxwind_mph NUMERIC(6, 2) NULL,
+    maxwind_kph NUMERIC(6, 2) NULL,
+    totalprecip_mm NUMERIC(6, 2) NULL,
+    totalprecip_in NUMERIC(6, 2) NULL,
+    totalsnow_cm NUMERIC(6, 2) NULL,
+    avgvis_km NUMERIC(6, 2) NULL,
+    avgvis_miles NVARCHAR(255) NULL,
+    avghumidity NUMERIC(6, 2) NULL,
+    daily_will_it_rain BIT NULL,
+    daily_chance_of_rain NUMERIC(6, 2) NULL,
+    daily_will_it_snow BIT NULL,
+    daily_chance_of_snow NUMERIC(6, 2) NULL,
+    conditions VARCHAR(50) NULL,
+    avgmis_miles NUMERIC(6, 2) NULL,
+    CONSTRAINT PK_DailyForecast PRIMARY KEY CLUSTERED (DailyForecastID ASC)
+    )
 GO
 
 

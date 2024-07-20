@@ -1,55 +1,56 @@
-USE [Weather_v2]
+USE Weather_v2
 GO
 
-/****** Object:  Table [dbo].[HourlyForecast]    Script Date: 7/3/2024 10:57:52 AM ******/
+/****** Object:  Table dbo.HourlyForecast    Script Date: 7/3/2024 10:57:52 AM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE TABLE [dbo].[HourlyForecast](
-    [HourlyForecastID] [int] IDENTITY(1,1) NOT NULL,
-    [location] [nvarchar](255) NULL,
-    [forecast_date] [nvarchar](255) NULL,
-    [time] [nvarchar](255) NULL,
-    [time_epoch] [float] NULL,
-    [temp_c] [float] NULL,
-    [temp_f] [float] NULL,
-    [is_day] [float] NULL,
-    [condition] [nvarchar](255) NULL,
-    [wind_mph] [float] NULL,
-    [wind_kph] [float] NULL,
-    [wind_degree] [float] NULL,
-    [wind_dir] [nvarchar](255) NULL,
-    [pressure_mb] [float] NULL,
-    [pressure_in] [float] NULL,
-    [precip_mm] [float] NULL,
-    [precip_in] [float] NULL,
-    [humidity] [float] NULL,
-    [cloud] [float] NULL,
-    [feelslike_c] [float] NULL,
-    [feelslike_f] [float] NULL,
-    [windchill_c] [float] NULL,
-    [windchill_f] [float] NULL,
-    [heatindex_c] [float] NULL,
-    [heatindex_f] [float] NULL,
-    [dewpoint_c] [float] NULL,
-    [dewpoint_f] [float] NULL,
-    [will_it_rain] [float] NULL,
-    [chance_of_rain] [float] NULL,
-    [will_it_snow] [float] NULL,
-    [chance_of_snow] [float] NULL,
-    [vis_km] [float] NULL,
-    [vis_miles] [float] NULL,
-    [gust_mph] [float] NULL,
-    [gust_kph] [float] NULL,
-    [uv] [float] NULL,
- CONSTRAINT [PK_HourlyForecast] PRIMARY KEY CLUSTERED 
-(
-    [HourlyForecastID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
+DROP TABLE IF EXISTS dbo.HourlyForecast;
+GO 
+
+CREATE TABLE dbo.HourlyForecast (
+    HourlyForecastID INT IDENTITY(1, 1) NOT NULL,
+    LocationID INT NULL,
+    --location varchar(50) NULL,
+    forecast_date DATETIME NULL,
+    TIME DATETIME NULL,
+    time_epoch INT NULL,
+    temp_c NUMERIC(6, 2) NULL,
+    temp_f NUMERIC(6, 2) NULL,
+    is_day BIT NULL,
+    condition VARCHAR(50) NULL,
+    wind_mph NUMERIC(6, 2) NULL,
+    wind_kph NUMERIC(6, 2) NULL,
+    wind_degree NUMERIC(6, 2) NULL,
+    wind_dir VARCHAR(50) NULL,
+    pressure_mb NUMERIC(6, 2) NULL,
+    pressure_in NUMERIC(6, 2) NULL,
+    precip_mm NUMERIC(6, 2) NULL,
+    precip_in NUMERIC(6, 2) NULL,
+    humidity NUMERIC(6, 2) NULL,
+    cloud NUMERIC(6, 2) NULL,
+    feelslike_c NUMERIC(6, 2) NULL,
+    feelslike_f NUMERIC(6, 2) NULL,
+    windchill_c NUMERIC(6, 2) NULL,
+    windchill_f NUMERIC(6, 2) NULL,
+    heatindex_c NUMERIC(6, 2) NULL,
+    heatindex_f NUMERIC(6, 2) NULL,
+    dewpoint_c NUMERIC(6, 2) NULL,
+    dewpoint_f NUMERIC(6, 2) NULL,
+    will_it_rain BIT NULL,
+    chance_of_rain NUMERIC(6, 2) NULL,
+    will_it_snow BIT NULL,
+    chance_of_snow NUMERIC(6, 2) NULL,
+    vis_km NUMERIC(6, 2) NULL,
+    vis_miles NUMERIC(6, 2) NULL,
+    gust_mph NUMERIC(6, 2) NULL,
+    gust_kph NUMERIC(6, 2) NULL,
+    uv NUMERIC(6, 2) NULL,
+    CONSTRAINT PK_HourlyForecast PRIMARY KEY CLUSTERED (HourlyForecastID ASC)
+    )
 GO
 
 
