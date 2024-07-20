@@ -1,48 +1,51 @@
-USE [Weather_v2]
+USE Weather_v2
 GO
 
-/****** Object:  Table [dbo].[CurrentConditions]    Script Date: 7/3/2024 10:54:32 AM ******/
+/****** Object:  Table dbo.CurrentConditions    Script Date: 7/3/2024 10:54:32 AM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE TABLE [dbo].[CurrentConditions](
-    [CurrentConditionID] [int] IDENTITY(1,1) NOT NULL,
-    [location] [nvarchar](255) NULL,
-    [last_updated_epoch] [float] NULL,
-    [last_updated] [nvarchar](255) NULL,
-    [temp_c] [float] NULL,
-    [temp_f] [float] NULL,
-    [isday] [float] NULL,
-    [current_conditions] [nvarchar](255) NULL,
-    [wind_mph] [float] NULL,
-    [wind_kph] [float] NULL,
-    [wind_degree] [float] NULL,
-    [wind_direction] [nvarchar](255) NULL,
-    [pressure_mb] [float] NULL,
-    [pressure_in] [float] NULL,
-    [precip_mm] [float] NULL,
-    [precip_in] [float] NULL,
-    [humidity] [float] NULL,
-    [cloud] [float] NULL,
-    [feelslike_c] [float] NULL,
-    [feelslike_f] [float] NULL,
-    [windchill_c] [float] NULL,
-    [windchill_f] [float] NULL,
-    [heatindex_c] [float] NULL,
-    [heatindex_f] [float] NULL,
-    [dewpoint_c] [float] NULL,
-    [dewpoint_f] [float] NULL,
-    [vis_km] [float] NULL,
-    [vis_miles] [float] NULL,
-    [uv] [float] NULL,
-    [gust_mph] [float] NULL,
-    [gust_kph] [float] NULL,
- CONSTRAINT [PK_CurrentConditions] PRIMARY KEY CLUSTERED 
+DROP TABLE IF EXISTS dbo.CurrentConditions;
+
+CREATE TABLE dbo.CurrentConditions(
+    CurrentConditionID int IDENTITY(1,1) NOT NULL,
+    LocationID INT NULL,
+    --location varchar(50) NULL,
+    last_updated_epoch INT NULL,
+    last_updated varchar(50) NULL,
+    temp_c numeric(6,2) NULL,
+    temp_f numeric(6,2) NULL,
+    isday bit NULL,
+    current_conditions varchar(50) NULL,
+    wind_mph numeric(6,2) NULL,
+    wind_kph numeric(6,2) NULL,
+    wind_degree numeric(6,2) NULL,
+    wind_direction varchar(50) NULL,
+    pressure_mb numeric(6,2) NULL,
+    pressure_in numeric(6,2) NULL,
+    precip_mm numeric(6,2) NULL,
+    precip_in numeric(6,2) NULL,
+    humidity numeric(6,2) NULL,
+    cloud numeric(6,2) NULL,
+    feelslike_c numeric(6,2) NULL,
+    feelslike_f numeric(6,2) NULL,
+    windchill_c numeric(6,2) NULL,
+    windchill_f numeric(6,2) NULL,
+    heatindex_c numeric(6,2) NULL,
+    heatindex_f numeric(6,2) NULL,
+    dewpoint_c numeric(6,2) NULL,
+    dewpoint_f numeric(6,2) NULL,
+    vis_km numeric(6,2) NULL,
+    vis_miles numeric(6,2) NULL,
+    uv numeric(6,2) NULL,
+    gust_mph numeric(6,2) NULL,
+    gust_kph numeric(6,2) NULL,
+ CONSTRAINT PK_CurrentConditions PRIMARY KEY CLUSTERED 
 (
-    [CurrentConditionID] ASC
+    CurrentConditionID ASC
 )
 ) 
 GO

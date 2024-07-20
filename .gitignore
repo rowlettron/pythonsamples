@@ -161,3 +161,6 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 weather/keyring.py
+weather/SQL/.DS_Store
+weather/SQL/MSSQL/.DS_Store
+weather/SQL/.DS_Store

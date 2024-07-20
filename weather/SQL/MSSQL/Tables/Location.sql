@@ -13,14 +13,14 @@ DROP TABLE IF EXISTS dbo.Location;
 CREATE TABLE dbo.Location(
     LocationID int IDENTITY(1,1) NOT NULL,
     PostalCode varchar(25) NULL, 
-    name nvarchar(255) NULL,
-    region nvarchar(255) NULL,
-    country nvarchar(255) NULL,
-    latitude float NULL,
-    longitude float NULL,
-    timezone nvarchar(255) NULL,
-    localtime_epoch float NULL,
-    localtime nvarchar(255) NULL,
+    name varchar(50) NULL,
+    region varchar(50) NULL,
+    country varchar(50) NULL,
+    latitude numeric(9,2) NULL,
+    longitude numeric(9,2) NULL,
+    timezone varchar(50) NULL,
+    localtime_epoch int NULL,
+    localtime datetime NULL,
  CONSTRAINT PK_Location PRIMARY KEY CLUSTERED (LocationID ASC)
 ) 
 GO
