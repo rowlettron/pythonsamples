@@ -85,3 +85,5 @@ cross apply openjson(b.[hour]) with (
     gust_kph float '$.gust_kph',
     uv float '$.uv'
 ) as c
+where lvl1.Processed = 0;
+
