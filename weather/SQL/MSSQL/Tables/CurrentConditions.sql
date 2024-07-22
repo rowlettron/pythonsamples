@@ -15,7 +15,7 @@ CREATE TABLE dbo.CurrentConditions(
     LocationID INT NULL,
     --location varchar(50) NULL,
     last_updated_epoch INT NULL,
-    last_updated varchar(50) NULL,
+    last_updated datetime NULL,
     temp_c numeric(6,2) NULL,
     temp_f numeric(6,2) NULL,
     isday bit NULL,

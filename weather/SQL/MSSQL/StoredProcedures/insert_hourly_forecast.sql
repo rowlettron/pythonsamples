@@ -1,19 +1,20 @@
 /*
  * DROP PROC dbo.insert_hourly_forecast
  */
-
-IF  EXISTS (SELECT *
-            FROM sys.procedures
-            WHERE object_id = OBJECT_ID('[dbo].insert_hourly_forecast') )
+IF EXISTS (
+        SELECT *
+        FROM sys.procedures
+        WHERE object_id = OBJECT_ID('[dbo].insert_hourly_forecast')
+        )
 BEGIN
     DROP PROC dbo.insert_hourly_forecast
+
     PRINT '<<< DROPPED PROC dbo.insert_hourly_forecast IN ' + db_name() + ' ON ' + @@servername + '  >>>'
 END
-go
+GO
 
 CREATE PROC dbo.insert_hourly_forecast
 AS
-
 /*****************************************************************************
 *  Object Type:	    Stored Procedure
 *  Function:
@@ -26,9 +27,10 @@ AS
 *  ----------    --------------------    -------------------------------------
 ******************************************************************************/
 BEGIN
-    SELECT a.name,
+    SELECT l.LocationID,
+        a.name,
         b.forecast_date,
-        c.[time],
+        c.forecast_hour,
         c.time_epoch,
         c.temp_c,
         c.temp_f,
@@ -62,7 +64,7 @@ BEGIN
         c.gust_mph,
         c.gust_kph,
         c.uv
-    INTO #source 
+    INTO #source
     FROM dbo.WeatherJsonLoad lvl1
     CROSS APPLY openjson(lvl1.JsonData) WITH (
             name VARCHAR(50) '$.location.name',
@@ -74,7 +76,7 @@ BEGIN
             hour NVARCHAR(max) '$.hour' AS json
             ) AS b
     CROSS APPLY openjson(b.[hour]) WITH (
-            [time] DATETIME '$.time',
+            forecast_hour DATETIME '$.time',
             time_epoch INT '$.time_epoch',
             temp_c FLOAT '$.temp_c',
             temp_f FLOAT '$.temp_f',
@@ -109,60 +111,153 @@ BEGIN
             gust_kph FLOAT '$.gust_kph',
             uv FLOAT '$.uv'
             ) AS c
+    INNER JOIN dbo.Location l
+        ON lvl1.name = l.name
     WHERE lvl1.Processed = 0;
 
-    BEGIN TRY 
-        MERGE dbo.HourlyForecast AS t 
-
-        USING #source AS s ON s.LocationID = t.LocationID
-                          AND s.time_epoch = t.time_epoch
-
-        WHEN MATCHED THEN 
-        UPDATE SET temp_c = s.temp_c,
-                   temp_f = s.temp_f,
-                   is_day = s.is_day,
-                   condition = s.condition,
-                   wind_mph = s.wind_mph,
-                   wind_kph = s.wind_kph,
-                   wind_degree = s.wind_degree,
-                   wind_dir = s.wind_dir,
-                   pressure_mb = s.pressure_mb,
-                   pressure_in = s.pressure_in,
-                   precip_mm = s.precip_mm,
-                   precip_in = s.precip_in,
-                   humidity = s.humidity,
-                   cloud = s.cloud,
-                   feelslike_c = s.feelslike_c,
-                   feelslike_f = s.feelslike_f,
-                   windchill_c = s.windchill_c,
-                   windchill_f = s.windchill_f,
-                   heatindex_c = s.heatindex_c,
-                   heatindex_f = s.heatindex_f,
-                   dewpoint_c = s.dewpoint_c,
-                   dewpoint_f  = s.dewpoint_f,
-                   will_it_rain = s.will_it_rain,
-                   chance_of_rain = s.chance_of_rain,
-                   will_it_snow = s.will_it_snow,
-                   chance_of_snow = s.chance_of_snow,
-                   vis_km = s.vis_km,
-                   vis_miles = s.vis_miles,
-                   gust_mph = s.gust_mph,
-                   gust_kph = s.gust_kph,
-                   gust_kph = s.gust_kph,
-                   uv = s.uv 
+    BEGIN TRY
+        MERGE dbo.HourlyForecast AS t
+        USING #source AS s
+            ON s.LocationID = t.LocationID
+                AND s.time_epoch = t.time_epoch
+        WHEN MATCHED
+            THEN
+                UPDATE
+                SET temp_c = s.temp_c,
+                    temp_f = s.temp_f,
+                    is_day = s.is_day,
+                    condition = s.condition,
+                    wind_mph = s.wind_mph,
+                    wind_kph = s.wind_kph,
+                    wind_degree = s.wind_degree,
+                    wind_dir = s.wind_dir,
+                    pressure_mb = s.pressure_mb,
+                    pressure_in = s.pressure_in,
+                    precip_mm = s.precip_mm,
+                    precip_in = s.precip_in,
+                    humidity = s.humidity,
+                    cloud = s.cloud,
+                    feelslike_c = s.feelslike_c,
+                    feelslike_f = s.feelslike_f,
+                    windchill_c = s.windchill_c,
+                    windchill_f = s.windchill_f,
+                    heatindex_c = s.heatindex_c,
+                    heatindex_f = s.heatindex_f,
+                    dewpoint_c = s.dewpoint_c,
+                    dewpoint_f = s.dewpoint_f,
+                    will_it_rain = s.will_it_rain,
+                    chance_of_rain = s.chance_of_rain,
+                    will_it_snow = s.will_it_snow,
+                    chance_of_snow = s.chance_of_snow,
+                    vis_km = s.vis_km,
+                    vis_miles = s.vis_miles,
+                    gust_mph = s.gust_mph,
+                    gust_kph = s.gust_kph,
+                    gust_kph = s.gust_kph,
+                    uv = s.uv
+        WHEN NOT MATCHED
+            THEN
+                INSERT (
+                    LocationID,
+                    forecast_date,
+                    forecast_hour,
+                    time_epoch,
+                    temp_c,
+                    temp_f,
+                    is_day,
+                    condition,
+                    wind_mph,
+                    wind_kph,
+                    wind_degree,
+                    wind_dir,
+                    pressure_mb,
+                    pressure_in,
+                    precip_mm,
+                    precip_in,
+                    humidity,
+                    cloud,
+                    feelslike_c,
+                    feelslike_f,
+                    windchill_c,
+                    windchill_f,
+                    heatindex_c,
+                    heatindex_f,
+                    dewpoint_c,
+                    dewpoint_f,
+                    will_it_rain,
+                    chance_of_rain,
+                    will_it_snow,
+                    chance_of_snow,
+                    vis_km,
+                    vis_miles,
+                    gust_mph,
+                    gust_kph,
+                    uv
+                    )
+                VALUES (
+                    s.LocationID,
+                    s.forecast_date,
+                    s.forecast_hour,
+                    s.time_epoch,
+                    s.temp_c,
+                    s.temp_f,
+                    s.is_day,
+                    s.condition,
+                    s.wind_mph,
+                    s.wind_kph,
+                    s.wind_degree,
+                    s.wind_dir,
+                    s.pressure_mb,
+                    s.pressure_in,
+                    s.precip_mm,
+                    s.precip_in,
+                    s.humidity,
+                    s.cloud,
+                    s.feelslike_c,
+                    s.feelslike_f,
+                    s.windchill_c,
+                    s.windchill_f,
+                    s.heatindex_c,
+                    s.heatindex_f,
+                    s.dewpoint_c,
+                    s.dewpoint_f,
+                    s.will_it_rain,
+                    s.chance_of_rain,
+                    s.will_it_snow,
+                    s.chance_of_snow,
+                    s.vis_km,
+                    s.vis_miles,
+                    s.gust_mph,
+                    s.gust_kph,
+                    s.uv
+                    ); 
     END TRY
-    BEGIN CATCH 
 
+    BEGIN CATCH
+        INSERT INTO dbo.Errorlog (
+            TableName,
+            ErrorNumber,
+            ErrorMessage
+            )
+        VALUES (
+            'Location',
+            ERROR_NUMBER(),
+            ERROR_MESSAGE()
+            );
     END CATCH;
 END
-go
+GO
 
-IF  EXISTS (SELECT *
-            FROM sys.procedures
-            WHERE object_id = OBJECT_ID('[dbo].insert_hourly_forecast') )
+IF EXISTS (
+        SELECT *
+        FROM sys.procedures
+        WHERE object_id = OBJECT_ID('[dbo].insert_hourly_forecast')
+        )
 BEGIN
     PRINT '<<< CREATED PROC dbo.insert_hourly_forecast IN ' + db_name() + ' ON ' + @@servername + '  >>>'
 END
 ELSE
     PRINT '<<< FAILED CREATING PROC dbo.insert_hourly_forecast IN ' + db_name() + ' ON ' + @@servername + '  >>>'
-go
+GO
+
+

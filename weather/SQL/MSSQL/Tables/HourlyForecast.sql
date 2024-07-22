@@ -16,7 +16,7 @@ CREATE TABLE dbo.HourlyForecast (
     LocationID INT NULL,
     --location varchar(50) NULL,
     forecast_date DATETIME NULL,
-    TIME DATETIME NULL,
+    forecast_hour DATETIME NULL,
     time_epoch INT NULL,
     temp_c NUMERIC(6, 2) NULL,
     temp_f NUMERIC(6, 2) NULL,
