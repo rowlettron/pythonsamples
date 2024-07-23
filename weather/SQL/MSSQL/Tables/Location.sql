@@ -19,8 +19,8 @@ CREATE TABLE dbo.Location(
     latitude numeric(6,2) NULL,
     longitude numeric(6,2) NULL,
     timezone varchar(50) NULL,
-    localtime_epoch int NULL,
-    localtime datetime NULL,
+    local_time_epoch int NULL,
+    local_time datetime NULL,
  CONSTRAINT PK_Location PRIMARY KEY CLUSTERED (LocationID ASC)
 ) 
 GO

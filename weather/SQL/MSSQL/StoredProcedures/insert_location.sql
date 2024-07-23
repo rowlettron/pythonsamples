@@ -39,8 +39,8 @@ BEGIN
            a.latitude,
            a.longitude,
            a.timezone,
-           a.localtime_epoch,
-           a.localtime
+           a.local_time_epoch,
+           a.local_time
     INTO #source
     FROM dbo.WeatherJsonLoad AS lvl1
     CROSS APPLY OPENJSON(lvl1.JsonData) WITH (
@@ -50,8 +50,8 @@ BEGIN
         latitude NUMERiC(6,2) '$.location.lat',
         longitude NUMERIC(6,2) '$.location.lon',
         timezone VARCHAR(50) '$.location.tz_id',
-        localtime_epoch INT '$.location.localtime_epoch',
-        localtime DATETIME '$.location.localtime'
+        local_time_epoch INT '$.location.localtime_epoch',
+        local_time DATETIME '$.location.localtime'
     ) AS a
     WHERE Processed = 0;
 
@@ -67,11 +67,11 @@ BEGIN
                    latitude = s.latitude,
                    longitude = s.longitude,
                    timezone = s.timezone,
-                   localtime_epoch = s.localtime_epoch,
-                   localtime = s.localtime 
+                   local_time_epoch = s.local_time_epoch,
+                   local_time = s.local_time 
 
         WHEN NOT MATCHED THEN 
-        INSERT (PostalCode, name, region, country, latitude, longitude, timezone, localtime_epoch, localtime)
+        INSERT (PostalCode, name, region, country, latitude, longitude, timezone, local_time_epoch, local_time)
         VALUES (@PostalCode,
                 s.name,
                 s.region,
@@ -79,8 +79,8 @@ BEGIN
                 s.latitude,
                 s.longitude,
                 s.timezone,
-                s.localtime_epoch,
-                s.localtime); 
+                s.local_time_epoch,
+                s.local_time); 
     END TRY
     BEGIN CATCH
         INSERT INTO dbo.Errorlog(TableName, ErrorNumber, ErrorMessage)

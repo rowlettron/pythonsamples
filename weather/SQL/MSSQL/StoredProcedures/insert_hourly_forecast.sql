@@ -161,7 +161,7 @@ BEGIN
                     LocationID,
                     forecast_date,
                     forecast_hour,
-                    time_epoch,
+                    forecast_time_epoch,
                     temp_c,
                     temp_f,
                     is_day,

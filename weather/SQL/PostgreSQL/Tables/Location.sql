@@ -9,7 +9,7 @@ CREATE TABLE Location(
     latitude numeric(6,2) NULL,
     longitude numeric(6,2) NULL,
     timezone varchar(50) NULL,
-    localtime_epoch int NULL,
-    "localtime" varchar(255) NULL,
+    local_time_epoch int NULL,
+    local_time timestamp NULL,
   PRIMARY KEY (LocationID)
   ) ;
