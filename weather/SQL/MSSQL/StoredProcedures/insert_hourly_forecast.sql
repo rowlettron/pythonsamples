@@ -1,19 +1,19 @@
 /*
- * DROP PROC dbo.insert_hourly_forecast
+ * DROP PROC dbo.insert_hourlyforecast
  */
 IF EXISTS (
         SELECT *
         FROM sys.procedures
-        WHERE object_id = OBJECT_ID('[dbo].insert_hourly_forecast')
+        WHERE object_id = OBJECT_ID('[dbo].insert_hourlyforecast')
         )
 BEGIN
-    DROP PROC dbo.insert_hourly_forecast
+    DROP PROC dbo.insert_hourlyforecast
 
-    PRINT '<<< DROPPED PROC dbo.insert_hourly_forecast IN ' + db_name() + ' ON ' + @@servername + '  >>>'
+    PRINT '<<< DROPPED PROC dbo.insert_hourlyforecast IN ' + db_name() + ' ON ' + @@servername + '  >>>'
 END
 GO
 
-CREATE PROC dbo.insert_hourly_forecast
+CREATE PROC dbo.insert_hourlyforecast
 AS
 /*****************************************************************************
 *  Object Type:	    Stored Procedure
@@ -112,7 +112,7 @@ BEGIN
             uv FLOAT '$.uv'
             ) AS c
     INNER JOIN dbo.Location l
-        ON lvl1.name = l.name
+        ON a.name = l.name
     WHERE lvl1.Processed = 0;
 
     BEGIN TRY
@@ -251,13 +251,13 @@ GO
 IF EXISTS (
         SELECT *
         FROM sys.procedures
-        WHERE object_id = OBJECT_ID('[dbo].insert_hourly_forecast')
+        WHERE object_id = OBJECT_ID('[dbo].insert_hourlyforecast')
         )
 BEGIN
-    PRINT '<<< CREATED PROC dbo.insert_hourly_forecast IN ' + db_name() + ' ON ' + @@servername + '  >>>'
+    PRINT '<<< CREATED PROC dbo.insert_hourlyforecast IN ' + db_name() + ' ON ' + @@servername + '  >>>'
 END
 ELSE
-    PRINT '<<< FAILED CREATING PROC dbo.insert_hourly_forecast IN ' + db_name() + ' ON ' + @@servername + '  >>>'
+    PRINT '<<< FAILED CREATING PROC dbo.insert_hourlyforecast IN ' + db_name() + ' ON ' + @@servername + '  >>>'
 GO
 
 

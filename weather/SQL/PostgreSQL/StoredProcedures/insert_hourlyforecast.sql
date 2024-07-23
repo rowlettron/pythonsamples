@@ -1,5 +1,3 @@
---DROP PROCEDURE public.insert_hourlyforecast(text);
-
 CREATE OR REPLACE PROCEDURE public.insert_hourlyforecast() --Do not remove parentheses
 LANGUAGE plpgsql
 AS
