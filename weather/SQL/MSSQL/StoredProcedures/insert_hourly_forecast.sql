@@ -119,7 +119,7 @@ BEGIN
         MERGE dbo.HourlyForecast AS t
         USING #source AS s
             ON s.LocationID = t.LocationID
-                AND s.time_epoch = t.time_epoch
+                AND s.time_epoch = t.forecast_time_epoch
         WHEN MATCHED
             THEN
                 UPDATE
@@ -152,7 +152,6 @@ BEGIN
                     vis_km = s.vis_km,
                     vis_miles = s.vis_miles,
                     gust_mph = s.gust_mph,
-                    gust_kph = s.gust_kph,
                     gust_kph = s.gust_kph,
                     uv = s.uv
         WHEN NOT MATCHED

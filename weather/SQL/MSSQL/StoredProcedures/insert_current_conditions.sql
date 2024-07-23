@@ -14,7 +14,7 @@ BEGIN
 END
 go
 
-CREATE PROC dbo.insert_current_conditions
+CREATE PROC dbo.insert_current_conditions 
 AS
 
 /*****************************************************************************
@@ -29,6 +29,7 @@ AS
 *  ----------    --------------------    -------------------------------------
 ******************************************************************************/
 BEGIN
+
     DROP TABLE IF EXISTS #source;
 
     SELECT l.LocationID,

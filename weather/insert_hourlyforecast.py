@@ -66,7 +66,7 @@ conn = d.DataAccess()
 engine = conn.getConnection(dbType)
 
 if dbType == 'mssql':
-    sp = "exec dbo.insert_current_conditions ;"
+    sp = "exec dbo.insert_hourlyforecast;"
 else:
-    sp = "call public.insert_current_conditions();"
+    sp = "call public.insert_hourlyforecast();"
 conn.callStoredProcedure(engine, sp)

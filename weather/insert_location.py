@@ -65,6 +65,10 @@ with open(filePath, 'w') as f:
 conn = d.DataAccess()
 engine = conn.getConnection(dbType)
 
-sp = "call insert_location('" + zipcode + "');"
+if dbType == 'mssql':
+    sp = "insert_location '" + zipcode + "';"
+else:
+    sp = "call insert_location('" + zipcode + "');"
+
 conn.callStoredProcedure(engine, sp)
 

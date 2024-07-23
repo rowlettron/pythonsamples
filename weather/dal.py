@@ -26,7 +26,7 @@ class DataAccess:
     def getConnection(self, dbType):
 
         self.dbType = dbType
-        if self.dbType == 'MSSQL':
+        if self.dbType == 'mssql':
            self.host = 'mylaptop'
            self.port = '1433'
 

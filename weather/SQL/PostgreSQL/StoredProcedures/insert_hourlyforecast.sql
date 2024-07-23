@@ -20,7 +20,7 @@ BEGIN
     CREATE TEMP TABLE _hourlyforecast AS 
     SELECT l.locationid,
            CAST(arr.item_object ->> 'date' AS timestamp) AS forecast_date,
-           CAST(arr2.hour_object ->> 'time' AS timestamp) AS forecast_time,
+           CAST(arr2.hour_object ->> 'time' AS timestamp) AS forecast_hour, 
            CAST(arr2.hour_object ->> 'time_epoch' AS int8) AS forecast_time_epoch,
            CAST(arr2.hour_object ->> 'temp_c' AS float8) AS temp_c,
            CAST(arr2.hour_object ->> 'temp_f'AS float8) AS temp_f,
@@ -58,7 +58,8 @@ BEGIN
         FROM public.weatherjsonload wjl
         CROSS JOIN jsonb_array_elements(jsondata -> 'forecast' -> 'forecastday') with ordinality arr(item_object, position)
         CROSS JOIN jsonb_array_elements(arr.item_object -> 'hour') with ordinality arr2(hour_object, position)
-        INNER JOIN public.location l ON wjl.jsondata -> 'location' ->> 'name' = l."name";
+        INNER JOIN public.location l ON wjl.jsondata -> 'location' ->> 'name' = l."name"
+		WHERE wjl.processed = 0;
 
   --       execute 'drop table if exists ' || tmp_name;
 		-- execute 'create temp table ' || tmp_name || ' as select * from _hourlyforecast';
@@ -67,7 +68,7 @@ BEGIN
 
         USING _hourlyforecast AS s 
         ON s.locationid = t.locationid
-        AND s.forecast_time = t.forecast_time
+        AND s.forecast_time_epoch = t.forecast_time_epoch
 
         WHEN MATCHED THEN 
         UPDATE SET temp_c = s.temp_c,
@@ -106,7 +107,7 @@ BEGIN
         WHEN NOT MATCHED THEN 
         INSERT (locationid,
                 forecast_date,
-                forecast_time,
+                forecast_hour,
                 forecast_time_epoch,
                 temp_c,
                 temp_f,
@@ -140,7 +141,7 @@ BEGIN
                 uv)
         VALUES (s.locationid,
                 s.forecast_date,
-                s.forecast_time,
+                s.forecast_hour,
                 s.forecast_time_epoch,
                 s.temp_c,
                 s.temp_f,

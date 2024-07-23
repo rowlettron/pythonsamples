@@ -65,7 +65,11 @@ with open(filePath, 'w') as f:
 conn = d.DataAccess()
 engine = conn.getConnection(dbType)
 
-sp = 'call copy_payload_to_table();'
+if dbType == 'mssql':
+    sp = "exec copy_payload_to_table;"
+else:
+    sp = 'call copy_payload_to_table();'
+    
 conn.callStoredProcedure(engine, sp)
 
 
