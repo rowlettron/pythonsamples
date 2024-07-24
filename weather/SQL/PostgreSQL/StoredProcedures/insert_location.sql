@@ -12,7 +12,8 @@ AS $$
 *  Date          Modified By             Description
 *  ----------    --------------------    ---------------------------------------------------------
 **************************************************************************************************/
-
+DECLARE v_message TEXT;
+        v_sqlstate TEXT;
 BEGIN
     MERGE INTO public.location t
 
@@ -45,8 +46,13 @@ BEGIN
 
     WHEN NOT MATCHED THEN
     INSERT (postalcode, name, region, country, latitude, longitude, timezone, local_time_epoch, local_time)
-    VALUES (inPostalCode, s.name, s.region, s.country, s.latitude, s.longitude, s.timezone, s.localtime_epoch, s.local_time)
-    ;
+    VALUES (inPostalCode, s.name, s.region, s.country, s.latitude, s.longitude, s.timezone, s.localtime_epoch, s.local_time);
+    EXCEPTION WHEN OTHERS THEN 
+        GET STACKED DIAGNOSTICS v_message = message_text,
+                                v_sqlstate = returned_sqlstate;
+
+        INSERT INTO public.ErrorLog(tablename, errornumber, errormessage)
+        VALUES('Location', v_sqlstate, v_message);
 	
     RAISE NOTICE 'Finished procedure insert_location';
 	

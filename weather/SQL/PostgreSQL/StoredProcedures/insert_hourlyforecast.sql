@@ -13,7 +13,8 @@ $$
 *  Date          Modified By             Description
 *  ----------    --------------------    ---------------------------------------------------------
 **************************************************************************************************/
-DECLARE dummyvariable varchar(50);
+DECLARE v_message TEXT;
+        v_sqlstate TEXT;
 BEGIN
     DROP TABLE IF EXISTS _hourlyforecast;
 
@@ -173,6 +174,12 @@ BEGIN
                 s.gust_mph,
                 s.gust_kph,
                 s.uv);
+    EXCEPTION WHEN OTHERS THEN 
+        GET STACKED DIAGNOSTICS v_message = message_text,
+                                v_sqlstate = returned_sqlstate;
+
+        INSERT INTO public.ErrorLog(tablename, errornumber, errormessage)
+        VALUES('HourlyForecast', v_sqlstate, v_message);
 
 END;
 

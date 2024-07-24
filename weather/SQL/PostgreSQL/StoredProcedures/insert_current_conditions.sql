@@ -11,7 +11,8 @@ LANGUAGE plpgsql AS $$
  *  Date          Modified By             Description
  *  ----------    --------------------    ---------------------------------------------------------
  **************************************************************************************************/
-DECLARE dummyvariable varchar(50);
+DECLARE v_message TEXT;
+        v_sqlstate TEXT;
         _countofrows int;
 BEGIN
     DROP TABLE IF EXISTS _current_conditions;
@@ -152,6 +153,13 @@ BEGIN
             s.gust_mph,
             s.gust_kph
             );
+
+    EXCEPTION WHEN OTHERS THEN 
+        GET STACKED DIAGNOSTICS v_message = message_text,
+                                v_sqlstate = returned_sqlstate;
+
+        INSERT INTO public.ErrorLog(tablename, errornumber, errormessage)
+        VALUES('CurrentConditions', v_sqlstate, v_message);
 
 END;
 
