@@ -239,7 +239,7 @@ BEGIN
             ErrorMessage
             )
         VALUES (
-            'Location',
+            'HourlyForecast',
             ERROR_NUMBER(),
             ERROR_MESSAGE()
             );

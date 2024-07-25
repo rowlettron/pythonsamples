@@ -45,10 +45,6 @@ else:
 apiUrl = os.environ['WEATHER_HOST']
 key = os.environ['WEATHER_KEY']
 
-# headers = {
-#         'X-RapidAPI-Key': "958fc6f0cdmsh20a1f73f46e70d6p1757c6jsn5755135ea290",
-#         'X-RapidAPI-Host': "weatherapi-com.p.rapidapi.com"
-#         }
 headers = {
         'X-RapidAPI-Key': key,
         'X-RapidAPI-Host': apiUrl
