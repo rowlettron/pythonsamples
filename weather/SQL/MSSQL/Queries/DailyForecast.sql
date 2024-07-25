@@ -58,3 +58,5 @@ cross apply openjson(b.day) with (
     conditions varchar(255) '$.condition.text',
     uv float '$.uv'
 ) as c
+inner join dbo.Location l on a.name = l.name
+where lvl1.Processed = 0;

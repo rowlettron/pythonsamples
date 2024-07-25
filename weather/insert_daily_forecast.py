@@ -65,7 +65,11 @@ with open(filePath, 'w') as f:
 conn = d.DataAccess()
 engine = conn.getConnection(dbType)
 
-sp = 'call public.insert_daily_forecast();'
+if dbType == 'mssql':
+    sp = "exec dbo.insert_daily_forecast "
+else:
+    sp = 'call public.insert_daily_forecast();'
+    
 conn.callStoredProcedure(engine, sp)
 
 
