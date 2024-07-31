@@ -13,7 +13,7 @@ AS $$
 *  ----------    --------------------    ---------------------------------------------------------
 **************************************************************************************************/
 DECLARE v_message TEXT;
-        v_sqlstate TEXT;
+        v_sqlstate INT;
 BEGIN
     MERGE INTO public.location t
 
@@ -41,11 +41,11 @@ BEGIN
                 latitude = s.latitude,
                 longitude = s.longitude,
                 timezone = s.timezone,
-                local_time_epoch = s.localtime_epoch,
-                local_time = s.local_time
+                localtime_epoch = s.localtime_epoch,
+                "localtime" = s.local_time
 
     WHEN NOT MATCHED THEN
-    INSERT (postalcode, name, region, country, latitude, longitude, timezone, local_time_epoch, local_time)
+    INSERT (postalcode, name, region, country, latitude, longitude, timezone, localtime_epoch, "localtime")
     VALUES (inPostalCode, s.name, s.region, s.country, s.latitude, s.longitude, s.timezone, s.localtime_epoch, s.local_time);
     EXCEPTION WHEN OTHERS THEN 
         GET STACKED DIAGNOSTICS v_message = message_text,

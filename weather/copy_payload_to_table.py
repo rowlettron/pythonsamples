@@ -62,10 +62,8 @@ conn = d.DataAccess()
 engine = conn.getConnection(dbType)
 
 if dbType == 'mssql':
-    sp = "exec copy_payload_to_table;"
+    sp = "exec insert_payload_to_table'" + decodedRetWeatherData + "';"
 else:
-    sp = 'call copy_payload_to_table();'
+    sp = "call insert_payload_to_table('" + decodedRetWeatherData + "');"
     
 conn.callStoredProcedure(engine, sp)
-
-
