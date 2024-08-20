@@ -1,0 +1,10 @@
+{
+  "path" : "/JS7Demo/05_ScheduledExecution/jdAllDays",
+  "version" : "1.0.0",
+  "type" : "WORKINGDAYSCALENDAR",
+  "includes" : {
+    "weekdays" : [ {
+      "days" : [ 0, 1, 2, 3, 4, 5, 6 ]
+    } ]
+  }
+}

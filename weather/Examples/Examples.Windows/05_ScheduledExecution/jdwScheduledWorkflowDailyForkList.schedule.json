@@ -1,0 +1,28 @@
+{
+  "version" : "1.0.0",
+  "workflowName" : "jdwScheduledWorkflowForkList",
+  "title" : "Scheduled for daily execution",
+  "documentationName" : "PKB-JS7-OnlineDemo-Workflow-jdScheduledWorkflowDaily",
+  "submitOrderToControllerWhenPlanned" : true,
+  "planOrderAutomatically" : true,
+  "calendars" : [ {
+    "calendarName" : "jdwAllDays",
+    "timeZone" : "Etc/UTC",
+    "periods" : [ {
+      "singleStart" : "21:59:00",
+      "whenHoliday" : "SUPPRESS"
+    } ]
+  } ],
+  "variableSets" : [ {
+    "orderName" : "",
+    "variables" : {
+      "countries" : [ {
+        "countryCode" : "FR"
+      }, {
+        "countryCode" : "NL"
+      }, {
+        "countryCode" : "BE"
+      } ]
+    }
+  } ]
+}

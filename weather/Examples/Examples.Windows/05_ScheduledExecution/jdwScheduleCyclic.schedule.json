@@ -1,0 +1,30 @@
+{
+  "version" : "1.0.0",
+  "workflowName" : "jdwScheduledWorkflowCyclic",
+  "title" : "Scheduled for daily cyclic execution",
+  "submitOrderToControllerWhenPlanned" : true,
+  "planOrderAutomatically" : true,
+  "calendars" : [ {
+    "calendarName" : "jdwAllDays",
+    "timeZone" : "Etc/UTC",
+    "periods" : [ {
+      "begin" : "21:00:00",
+      "end" : "22:00:00",
+      "repeat" : "00:05:00",
+      "whenHoliday" : "SUPPRESS"
+    } ]
+  } ],
+  "variableSets" : [ {
+    "orderName" : "cycle1",
+    "variables" : {
+      "batch_code" : "65RD20",
+      "batch_no" : 17
+    }
+  }, {
+    "orderName" : "cycle2",
+    "variables" : {
+      "batch_code" : "65RD21",
+      "batch_no" : 18
+    }
+  } ]
+}

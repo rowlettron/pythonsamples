@@ -1,0 +1,262 @@
+{
+  "TYPE" : "Workflow",
+  "version" : "1.0.0",
+  "timeZone" : "Etc/UTC",
+  "title" : "Passing variables from forked branches",
+  "documentationName" : "PKB-JS7-OnlineDemo-Workflow-jdVariablesFork",
+  "orderPreparation" : {
+    "parameters" : {
+      "booking_code" : {
+        "type" : "String",
+        "default" : "'XYZ45'"
+      },
+      "flight_destination" : {
+        "type" : "String",
+        "default" : "'India'"
+      }
+    },
+    "allowUndeclared" : false
+  },
+  "instructions" : [ {
+    "TYPE" : "Execute.Named",
+    "jobName" : "job1",
+    "label" : "job1"
+  }, {
+    "TYPE" : "Fork",
+    "branches" : [ {
+      "id" : "branch1",
+      "workflow" : {
+        "instructions" : [ {
+          "TYPE" : "Execute.Named",
+          "jobName" : "job2_1a",
+          "label" : "job2_1a"
+        }, {
+          "TYPE" : "Execute.Named",
+          "jobName" : "job2_1b",
+          "label" : "job2_1b"
+        }, {
+          "TYPE" : "Execute.Named",
+          "jobName" : "job2_1c",
+          "label" : "job2_1c"
+        } ]
+      }
+    }, {
+      "id" : "branch2",
+      "workflow" : {
+        "instructions" : [ {
+          "TYPE" : "Execute.Named",
+          "jobName" : "job2_2a",
+          "label" : "job2_2a"
+        }, {
+          "TYPE" : "Execute.Named",
+          "jobName" : "job2_2b",
+          "label" : "job2_2b"
+        }, {
+          "TYPE" : "Execute.Named",
+          "jobName" : "job2_2c",
+          "label" : "job2_2c"
+        } ]
+      }
+    }, {
+      "id" : "branch3",
+      "workflow" : {
+        "instructions" : [ {
+          "TYPE" : "Execute.Named",
+          "jobName" : "job2_3a",
+          "label" : "job2_3a"
+        }, {
+          "TYPE" : "Execute.Named",
+          "jobName" : "job2_3b",
+          "label" : "job2_3b"
+        }, {
+          "TYPE" : "Execute.Named",
+          "jobName" : "job2_3c",
+          "label" : "job2_3c"
+        } ]
+      }
+    } ],
+    "joinIfFailed" : false
+  }, {
+    "TYPE" : "Execute.Named",
+    "jobName" : "job3",
+    "label" : "job3"
+  } ],
+  "jobs" : {
+    "job1" : {
+      "agentName" : "windowsAgent",
+      "executable" : {
+        "TYPE" : "ShellScriptExecutable",
+        "script" : "@echo off\n@echo running job: %JS7_JOB_NAME%\n\n@echo reading booking code from order variable: BOOKING_CODE = %BOOKING_CODE%\n@echo reading flight destination from order variable: FLIGHT_DESTINATION = %FLIGHT_DESTINATION%\n\nset NEW_BOOKING_CODE=\"XYZ45\"\nset NEW_FLIGHT_DESTINATION=\"Sydney\"\n\n@echo modifying booking code: %NEW_BOOKING_CODE%\n@echo new_booking_code=%NEW_BOOKING_CODE% >> %JS7_RETURN_VALUES%\n\n@echo modifying flight destination: %NEW_FLIGHT_DESTINATION%\n@echo new_flight_destination=%NEW_FLIGHT_DESTINATION% >> %JS7_RETURN_VALUES%\n\nping -n 6 localhost > NUL\n",
+        "env" : {
+          "BOOKING_CODE" : "$booking_code",
+          "FLIGHT_DESTINATION" : "$flight_destination"
+        },
+        "v1Compatible" : false
+      },
+      "skipIfNoAdmissionForOrderDay" : false,
+      "parallelism" : 1,
+      "graceTimeout" : 15,
+      "failOnErrWritten" : false
+    },
+    "job2_1a" : {
+      "agentName" : "windowsAgent",
+      "executable" : {
+        "TYPE" : "ShellScriptExecutable",
+        "script" : "@echo off\n@echo running job: %JS7_JOB_NAME%\n\n@echo reading booking code from order variable: BOOKING_CODE = %BOOKING_CODE%\n@echo reading flight destination from order variable: FLIGHT_DESTINATION = %FLIGHT_DESTINATION%\n\nping -n 6 localhost > NUL",
+        "env" : {
+          "BOOKING_CODE" : "$new_booking_code",
+          "FLIGHT_DESTINATION" : "$new_flight_destination"
+        },
+        "v1Compatible" : false
+      },
+      "skipIfNoAdmissionForOrderDay" : false,
+      "parallelism" : 1,
+      "graceTimeout" : 15,
+      "failOnErrWritten" : false
+    },
+    "job2_1b" : {
+      "agentName" : "windowsAgent",
+      "executable" : {
+        "TYPE" : "ShellScriptExecutable",
+        "script" : "@echo off\n@echo running job: %JS7_JOB_NAME%\n\n@echo reading booking code from order variable: BOOKING_CODE = %BOOKING_CODE%\n@echo reading flight destination from order variable: FLIGHT_DESTINATION = %FLIGHT_DESTINATION%\n\nset NEW_BOOKING_CODE=\"XYZ45\"\nset NEW_FLIGHT_DESTINATION=\"San Francisco\"\n\n@echo modifying booking code: %NEW_BOOKING_CODE%\n@echo new_booking_code=%NEW_BOOKING_CODE% >> %JS7_RETURN_VALUES%\n\n@echo modifying flight destination: %NEW_FLIGHT_DESTINATION%\n@echo new_flight_destination=%NEW_FLIGHT_DESTINATION% >> %JS7_RETURN_VALUES%\n\nping -n 6 localhost > NUL\n",
+        "env" : {
+          "BOOKING_CODE" : "$new_booking_code",
+          "FLIGHT_DESTINATION" : "$new_flight_destination"
+        },
+        "v1Compatible" : false
+      },
+      "skipIfNoAdmissionForOrderDay" : false,
+      "parallelism" : 1,
+      "graceTimeout" : 15,
+      "failOnErrWritten" : false
+    },
+    "job2_1c" : {
+      "agentName" : "windowsAgent",
+      "executable" : {
+        "TYPE" : "ShellScriptExecutable",
+        "script" : "@echo off\n@echo running job: %JS7_JOB_NAME%\n\n@echo reading booking code from order variable: BOOKING_CODE = %BOOKING_CODE%\n@echo reading flight destination from order variable: FLIGHT_DESTINATION = %FLIGHT_DESTINATION%\n\nping -n 6 localhost > NUL",
+        "env" : {
+          "BOOKING_CODE" : "$new_booking_code",
+          "FLIGHT_DESTINATION" : "$new_flight_destination"
+        },
+        "v1Compatible" : false
+      },
+      "skipIfNoAdmissionForOrderDay" : false,
+      "parallelism" : 1,
+      "graceTimeout" : 15,
+      "failOnErrWritten" : false
+    },
+    "job2_2a" : {
+      "agentName" : "windowsAgent",
+      "executable" : {
+        "TYPE" : "ShellScriptExecutable",
+        "script" : "@echo off\n@echo running job: %JS7_JOB_NAME%\n\n@echo reading booking code from order variable: BOOKING_CODE = %BOOKING_CODE%\n@echo reading flight destination from order variable: FLIGHT_DESTINATION = %FLIGHT_DESTINATION%\n\nping -n 6 localhost > NUL",
+        "env" : {
+          "BOOKING_CODE" : "$new_booking_code",
+          "FLIGHT_DESTINATION" : "$new_flight_destination"
+        },
+        "v1Compatible" : false
+      },
+      "skipIfNoAdmissionForOrderDay" : false,
+      "parallelism" : 1,
+      "graceTimeout" : 15,
+      "failOnErrWritten" : false
+    },
+    "job2_2b" : {
+      "agentName" : "windowsAgent",
+      "executable" : {
+        "TYPE" : "ShellScriptExecutable",
+        "script" : "@echo off\n@echo running job: %JS7_JOB_NAME%\n\n@echo reading booking code from order variable: BOOKING_CODE = %BOOKING_CODE%\n@echo reading flight destination from order variable: FLIGHT_DESTINATION = %FLIGHT_DESTINATION%\n\nset NEW_BOOKING_CODE=\"XYZ45\"\nset NEW_FLIGHT_DESTINATION=\"London\"\n\n@echo modifying booking code: %NEW_BOOKING_CODE%\n@echo new_booking_code=%NEW_BOOKING_CODE% >> %JS7_RETURN_VALUES%\n\n@echo modifying flight destination: %NEW_FLIGHT_DESTINATION%\n@echo new_flight_destination=%NEW_FLIGHT_DESTINATION% >> %JS7_RETURN_VALUES%\n\nping -n 6 localhost > NUL\n",
+        "env" : {
+          "BOOKING_CODE" : "$new_booking_code",
+          "FLIGHT_DESTINATION" : "$new_flight_destination"
+        },
+        "v1Compatible" : false
+      },
+      "skipIfNoAdmissionForOrderDay" : false,
+      "parallelism" : 1,
+      "graceTimeout" : 15,
+      "failOnErrWritten" : false
+    },
+    "job2_2c" : {
+      "agentName" : "windowsAgent",
+      "executable" : {
+        "TYPE" : "ShellScriptExecutable",
+        "script" : "@echo off\n@echo running job: %JS7_JOB_NAME%\n\n@echo reading booking code from order variable: BOOKING_CODE = %BOOKING_CODE%\n@echo reading flight destination from order variable: FLIGHT_DESTINATION = %FLIGHT_DESTINATION%\n\nping -n 6 localhost > NUL",
+        "env" : {
+          "BOOKING_CODE" : "$new_booking_code",
+          "FLIGHT_DESTINATION" : "$new_flight_destination"
+        },
+        "v1Compatible" : false
+      },
+      "skipIfNoAdmissionForOrderDay" : false,
+      "parallelism" : 1,
+      "graceTimeout" : 15,
+      "failOnErrWritten" : false
+    },
+    "job2_3a" : {
+      "agentName" : "windowsAgent",
+      "executable" : {
+        "TYPE" : "ShellScriptExecutable",
+        "script" : "@echo off\n@echo running job: %JS7_JOB_NAME%\n\n@echo reading booking code from order variable: BOOKING_CODE = %BOOKING_CODE%\n@echo reading flight destination from order variable: FLIGHT_DESTINATION = %FLIGHT_DESTINATION%\n\nping -n 6 localhost > NUL",
+        "env" : {
+          "BOOKING_CODE" : "$new_booking_code",
+          "FLIGHT_DESTINATION" : "$new_flight_destination"
+        },
+        "v1Compatible" : false
+      },
+      "skipIfNoAdmissionForOrderDay" : false,
+      "parallelism" : 1,
+      "graceTimeout" : 15,
+      "failOnErrWritten" : false
+    },
+    "job2_3b" : {
+      "agentName" : "windowsAgent",
+      "executable" : {
+        "TYPE" : "ShellScriptExecutable",
+        "script" : "@echo off\n@echo running job: %JS7_JOB_NAME%\n\n@echo reading booking code from order variable: BOOKING_CODE = %BOOKING_CODE%\n@echo reading flight destination from order variable: FLIGHT_DESTINATION = %FLIGHT_DESTINATION%\n\nset NEW_BOOKING_CODE=\"XYZ45\"\nset NEW_FLIGHT_DESTINATION=\"Rome\"\n\n@echo modifying booking code: %NEW_BOOKING_CODE%\n@echo new_booking_code=%NEW_BOOKING_CODE% >> %JS7_RETURN_VALUES%\n\n@echo modifying flight destination: %NEW_FLIGHT_DESTINATION%\n@echo new_flight_destination=%NEW_FLIGHT_DESTINATION% >> %JS7_RETURN_VALUES%\n\nping -n 6 localhost > NUL\n",
+        "env" : {
+          "BOOKING_CODE" : "$new_booking_code",
+          "FLIGHT_DESTINATION" : "$new_flight_destination"
+        },
+        "v1Compatible" : false
+      },
+      "skipIfNoAdmissionForOrderDay" : false,
+      "parallelism" : 1,
+      "graceTimeout" : 15,
+      "failOnErrWritten" : false
+    },
+    "job2_3c" : {
+      "agentName" : "windowsAgent",
+      "executable" : {
+        "TYPE" : "ShellScriptExecutable",
+        "script" : "@echo off\n@echo running job: %JS7_JOB_NAME%\n\n@echo reading booking code from order variable: BOOKING_CODE = %BOOKING_CODE%\n@echo reading flight destination from order variable: FLIGHT_DESTINATION = %FLIGHT_DESTINATION%\n\nping -n 6 localhost > NUL",
+        "env" : {
+          "BOOKING_CODE" : "$new_booking_code",
+          "FLIGHT_DESTINATION" : "$new_flight_destination"
+        },
+        "v1Compatible" : false
+      },
+      "skipIfNoAdmissionForOrderDay" : false,
+      "parallelism" : 1,
+      "graceTimeout" : 15,
+      "failOnErrWritten" : false
+    },
+    "job3" : {
+      "agentName" : "windowsAgent",
+      "executable" : {
+        "TYPE" : "ShellScriptExecutable",
+        "script" : "@echo off\n@echo running job: %JS7_JOB_NAME%\n\n@echo reading booking code from order variable: BOOKING_CODE = %BOOKING_CODE%\n@echo reading flight destination from order variable: FLIGHT_DESTINATION = %FLIGHT_DESTINATION%\n\nping -n 6 localhost > NUL",
+        "env" : {
+          "BOOKING_CODE" : "$new_booking_code",
+          "FLIGHT_DESTINATION" : "$new_flight_destination"
+        },
+        "v1Compatible" : false
+      },
+      "skipIfNoAdmissionForOrderDay" : false,
+      "parallelism" : 1,
+      "graceTimeout" : 15,
+      "failOnErrWritten" : false
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "version" : "1.0.0",
+  "workflowName" : "jdwScheduledWorkflowBusinessDays",
+  "title" : "Scheduled for execution on business days",
+  "documentationName" : "PKB-JS7-OnlineDemo-Workflow-jdScheduledWorkflowBusinessDays",
+  "submitOrderToControllerWhenPlanned" : true,
+  "planOrderAutomatically" : true,
+  "calendars" : [ {
+    "calendarName" : "jdwBussinessDays",
+    "timeZone" : "Etc/UTC",
+    "periods" : [ {
+      "singleStart" : "20:30:00",
+      "whenHoliday" : "SUPPRESS"
+    } ]
+  } ],
+  "variableSets" : [ {
+    "orderName" : "business-days",
+    "variables" : {
+      "batch_code" : "72GB34a",
+      "batch_no" : 84
+    }
+  } ]
+}

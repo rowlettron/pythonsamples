@@ -1,0 +1,144 @@
+{
+  "TYPE" : "Workflow",
+  "version" : "1.0.0",
+  "timeZone" : "Etc/UTC",
+  "title" : "Execute jobs depending on dynamic conditions",
+  "documentationName" : "PKB-JS7-OnlineDemo-Workflow-jdConditionalResult",
+  "orderPreparation" : {
+    "parameters" : {
+      "return_value_job1" : {
+        "type" : "Number",
+        "default" : "0"
+      },
+      "return_value_job2" : {
+        "type" : "Number",
+        "default" : "0"
+      },
+      "return_value_job3" : {
+        "type" : "Number",
+        "default" : "0"
+      }
+    },
+    "allowUndeclared" : false
+  },
+  "jobResourceNames" : [ "Default" ],
+  "instructions" : [ {
+    "TYPE" : "Execute.Named",
+    "jobName" : "job1",
+    "label" : "job1"
+  }, {
+    "TYPE" : "If",
+    "predicate" : "$return_value_job1.toNumber == 0",
+    "then" : {
+      "instructions" : [ {
+        "TYPE" : "Execute.Named",
+        "jobName" : "job2",
+        "label" : "job2"
+      } ]
+    },
+    "else" : {
+      "instructions" : [ {
+        "TYPE" : "Execute.Named",
+        "jobName" : "job3",
+        "label" : "job3"
+      } ]
+    }
+  }, {
+    "TYPE" : "If",
+    "predicate" : "$return_value_job.toNumber > 0",
+    "then" : {
+      "instructions" : [ {
+        "TYPE" : "Execute.Named",
+        "jobName" : "job4",
+        "label" : "job4"
+      } ]
+    }
+  }, {
+    "TYPE" : "Execute.Named",
+    "jobName" : "job5",
+    "label" : "job5"
+  } ],
+  "jobs" : {
+    "job1" : {
+      "agentName" : "windowsAgent",
+      "executable" : {
+        "TYPE" : "ShellScriptExecutable",
+        "script" : "@echo off\n@echo using workflow: %JS7_WORKFLOW_NAME%\n@echo running job: %JS7_JOB_NAME%\n\n@echo current return value for job1: %RETURN_VALUE_JOB1%\n\nif \"$RETURN_VALUE_JOB1\" == \"0\" (\n    set /a RETURN_VALUE_JOB1=41\n    @echo modifying return value for job1: %RETURN_VALUE_JOB1%\n    @echo return_value_job1=%RETURN_VALUE_JOB1% >> %JS7_RETURN_VALUES%\n)\n\nping -n 6 localhost > NUL\n",
+        "env" : {
+          "RETURN_VALUE_JOB1" : "$return_value_job1"
+        },
+        "v1Compatible" : false,
+        "returnCodeMeaning" : {
+          "success" : [ 0, 1, 2, 3, 4 ]
+        }
+      },
+      "skipIfNoAdmissionForOrderDay" : false,
+      "parallelism" : 1,
+      "graceTimeout" : 15,
+      "failOnErrWritten" : false
+    },
+    "job2" : {
+      "agentName" : "windowsAgent",
+      "executable" : {
+        "TYPE" : "ShellScriptExecutable",
+        "script" : "@echo off\n@echo using workflow: %JS7_WORKFLOW_NAME%\n@echo running job: %JS7_JOB_NAME%\n\n@echo current return value for job2: %RETURN_VALUE_JOB2%\n\nif \"%RETURN_VALUE_JOB2%\" == \"0\" (\n    set /a RETURN_VALUE_JOB2=42\n)\n\n@echo setting return value for next job: %RETURN_VALUE_JOB2%\n@echo return_value_job=%RETURN_VALUE_JOB2% >> %JS7_RETURN_VALUES%\n\nping -n 6 localhost > NUL\n",
+        "env" : {
+          "RETURN_VALUE_JOB2" : "$return_value_job2"
+        },
+        "v1Compatible" : false,
+        "returnCodeMeaning" : {
+          "success" : [ 0, 1, 2, 3, 4 ]
+        }
+      },
+      "skipIfNoAdmissionForOrderDay" : false,
+      "parallelism" : 1,
+      "graceTimeout" : 15,
+      "failOnErrWritten" : false
+    },
+    "job3" : {
+      "agentName" : "windowsAgent",
+      "executable" : {
+        "TYPE" : "ShellScriptExecutable",
+        "script" : "@echo off\n@echo using workflow: %JS7_WORKFLOW_NAME%\n@echo running job: %JS7_JOB_NAME%\n\n@echo current return value for job3: %RETURN_VALUE_JOB3%\n\nif \"%RETURN_VALUE_JOB3%\" == \"0\" (\n    set /a RETURN_VALUE_JOB3=43\n)\n\n@echo setting return value for next job: %RETURN_VALUE_JOB3%\n@echo return_value_job=%RETURN_VALUE_JOB3% >> %JS7_RETURN_VALUES%\n\nping -n 6 localhost > NUL\n",
+        "env" : {
+          "RETURN_VALUE_JOB3" : "$return_value_job3"
+        },
+        "v1Compatible" : false,
+        "returnCodeMeaning" : {
+          "success" : [ 0, 1, 2, 3, 4 ]
+        }
+      },
+      "skipIfNoAdmissionForOrderDay" : false,
+      "parallelism" : 1,
+      "graceTimeout" : 15,
+      "failOnErrWritten" : false
+    },
+    "job4" : {
+      "agentName" : "windowsAgent",
+      "executable" : {
+        "TYPE" : "ShellScriptExecutable",
+        "script" : "@echo off\n@echo using workflow: %JS7_WORKFLOW_NAME%\n@echo running job: %JS7_JOB_NAME%\n\n@echo return value reported from previous job: %RETURN_VALUE_JOB%\n\nping -n 6 localhost > NUL\n",
+        "env" : {
+          "RETURN_VALUE_JOB" : "$return_value_job"
+        },
+        "v1Compatible" : false
+      },
+      "skipIfNoAdmissionForOrderDay" : false,
+      "parallelism" : 1,
+      "graceTimeout" : 15,
+      "failOnErrWritten" : false
+    },
+    "job5" : {
+      "agentName" : "windowsAgent",
+      "executable" : {
+        "TYPE" : "ShellScriptExecutable",
+        "script" : "@echo off\n@echo using workflow: %JS7_WORKFLOW_NAME%\n@echo running job: %JS7_JOB_NAME%\n\nping -n 6 localhost > NUL\n\n",
+        "v1Compatible" : false
+      },
+      "skipIfNoAdmissionForOrderDay" : false,
+      "parallelism" : 1,
+      "graceTimeout" : 15,
+      "failOnErrWritten" : false
+    }
+  }
+}
