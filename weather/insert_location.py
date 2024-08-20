@@ -70,5 +70,7 @@ if dbType == 'mssql':
 else:
     sp = "call insert_location('" + zipcode + "');"
 
+print(sp)
+
 conn.callStoredProcedure(engine, sp)
 
