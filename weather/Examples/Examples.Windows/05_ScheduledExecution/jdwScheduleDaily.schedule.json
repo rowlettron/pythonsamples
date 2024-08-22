@@ -1,0 +1,23 @@
+{
+  "version" : "1.0.0",
+  "workflowName" : "jdwScheduledWorkflowDaily",
+  "title" : "Scheduled for daily execution",
+  "documentationName" : "PKB-JS7-OnlineDemo-Workflow-jdScheduledWorkflowDaily",
+  "submitOrderToControllerWhenPlanned" : true,
+  "planOrderAutomatically" : true,
+  "calendars" : [ {
+    "calendarName" : "jdwAllDays",
+    "timeZone" : "Etc/UTC",
+    "periods" : [ {
+      "singleStart" : "21:59:00",
+      "whenHoliday" : "SUPPRESS"
+    } ]
+  } ],
+  "variableSets" : [ {
+    "orderName" : "",
+    "variables" : {
+      "batch_code" : "24AC13",
+      "batch_no" : 29
+    }
+  } ]
+}

@@ -1,0 +1,6 @@
+{
+  "TYPE" : "Lock",
+  "version" : "1.0.0",
+  "limit" : 12,
+  "title" : "Lock for big capacity"
+}
