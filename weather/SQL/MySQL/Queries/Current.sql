@@ -1,6 +1,6 @@
 use Weather_v2;
 
-select jsondata -> '$.location.name' as locationName,
+select jsondata ->> '$.location.name' as locationName,
        jsondata -> '$.current.last_updated_epoch' as lastUpdatedEpoch,
        json_unquote(jsondata -> '$.current.last_updated') as lastUpdated,
        jsondata -> '$.current.temp_c' as tempC,
