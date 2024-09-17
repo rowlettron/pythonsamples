@@ -1,7 +1,5 @@
 use Weather_v2;
 
--- forecastDateEpoch int path '$.date_epoch',
-
 select hourly.id,  
        jsondata ->> '$.location.name' as locationName,
        hourly.hourlyTime, 

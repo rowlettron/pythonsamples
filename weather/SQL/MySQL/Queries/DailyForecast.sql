@@ -1,11 +1,4 @@
 use Weather_v2;
-
--- SELECT people.* 
--- FROM t1, 
---      JSON_TABLE(json_col, '$.people[*]' COLUMNS (
---                 name VARCHAR(40)  PATH '$.name',
---                 address VARCHAR(100) PATH '$.address')
---      ) people;
      
 select distinct jsondata ->> '$.location.name' as locationName,
        forecast.forecastDate,

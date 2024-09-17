@@ -1,6 +1,6 @@
 use Weather_v2;
 
-select jsondata ->> '$.location.name' as locationName,
+select distinct jsondata ->> '$.location.name' as locationName,
        jsondata ->> '$.location.region' as region,
        jsondata ->> '$.location.country' as country,
        jsondata -> '$.location.lat' as latitude,
