@@ -1,6 +1,6 @@
 USE Weather_v2;
 
-DROP TABLE IF EXISTS dbo.Location;
+DROP TABLE IF EXISTS Location;
 
 CREATE TABLE Location(
     LocationID int AUTO_INCREMENT,
@@ -13,6 +13,7 @@ CREATE TABLE Location(
     timezone varchar(50) NULL,
     local_time_epoch int NULL,
     local_time datetime NULL,
- CONSTRAINT PK_Location PRIMARY KEY (LocationID ASC)
+ CONSTRAINT PK_Location PRIMARY KEY (LocationID ASC),
+ UNIQUE KEY (PostalCode)
 );
 

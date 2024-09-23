@@ -50,6 +50,19 @@ class DataAccess:
                  host = self.host,
                  database = self.db
              )
+        elif self.dbType == 'mysql':
+            self.host = '127.0.0.1'
+            self.port = '3306'
+
+            connect_url = URL.create(
+                'mysql',
+                username=self.user,
+                password=self.pwd,
+                host=self.host,
+                port=self.port, 
+                database=self.db
+            )
+
         engine = create_engine(connect_url) 
         return engine
     
@@ -63,6 +76,14 @@ class DataAccess:
             conn.commit()
             conn.close()
         elif self.dbType == 'mssql':
+            # print(sql)
+            conn = engine.raw_connection()
+            cursor = conn.cursor()
+            cursor.execute(sql)
+            cursor.close()
+            conn.commit()
+            conn.close()
+        elif self.dbType == 'mysql':
             # print(sql)
             conn = engine.raw_connection()
             cursor = conn.cursor()

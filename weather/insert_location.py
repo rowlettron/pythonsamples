@@ -67,10 +67,12 @@ engine = conn.getConnection(dbType)
 
 if dbType == 'mssql':
     sp = "insert_location '" + zipcode + "';"
-else:
+elif dbType == 'postgres':
     sp = "call insert_location('" + zipcode + "');"
+elif dbType == 'mysql':
+     sp = "insert into Weather_v2.weatherjsonload(jsondata) values ('" + decodedRetWeatherData + "'); call Weather_v2.insert_location('" + zipcode + "');"
 
-print(sp)
+# print(sp)
 
 conn.callStoredProcedure(engine, sp)
 

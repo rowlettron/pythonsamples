@@ -1,5 +1,7 @@
 use <schema>;
 
+DROP PROCEDURE IF EXISTS <proc name>;
+
 delimiter //
 
 CREATE PROCEDURE <proc name> (param1 datatype,

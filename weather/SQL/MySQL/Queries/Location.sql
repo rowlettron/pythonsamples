@@ -9,5 +9,6 @@ select distinct jsondata ->> '$.location.name' as locationName,
        jsondata -> '$.location.localtime_epoch' as localTimeEpoch,
        jsondata ->> '$.location.localtime' as local_Time
 
-from Weather_v2.weatherjsonload;
+from Weather_v2.weatherjsonload
+where processed = 0;
 

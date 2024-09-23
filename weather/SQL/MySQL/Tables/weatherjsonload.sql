@@ -6,7 +6,7 @@ CREATE TABLE Weather_v2.weatherjsonload(
     wjl_id INT AUTO_INCREMENT,
     jsondata JSON NULL,
     createdate DATETIME DEFAULT NOW(),
-    processed TINYINT NULL,
+    processed TINYINT DEFAULT 0,
     processed_date DATETIME NULL,
     CONSTRAINT PK_weatherjson PRIMARY KEY (wjl_id)
 );
