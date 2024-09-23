@@ -40,7 +40,7 @@ BEGIN
        jsondata -> '$.current.gust_mph' as gust_mph, 
        jsondata -> '$.current.gust_kph' as gust_kph
     FROM weatherjsonload a
-    INNER JOIN Weather_v2.Location b on jsondata ->> '$.location.name' = b.LocationID
+    INNER JOIN Weather_v2.Location b on jsondata ->> '$.location.name' = b.name
     WHERE processed = 0
     ) ;
     

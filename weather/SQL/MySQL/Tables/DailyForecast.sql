@@ -26,7 +26,6 @@ CREATE TABLE DailyForecast (
     daily_will_it_snow BIT NULL,
     daily_chance_of_snow NUMERIC(6, 2) NULL,
     conditions VARCHAR(50) NULL,
-    avgmis_miles NUMERIC(6, 2) NULL,
     CONSTRAINT PK_DailyForecast PRIMARY KEY (DailyForecastID ASC),
     UNIQUE KEY (LocationID, forecast_date_epoch)
     ); 
