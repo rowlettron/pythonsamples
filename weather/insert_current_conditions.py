@@ -67,6 +67,9 @@ engine = conn.getConnection(dbType)
 
 if dbType == 'mssql':
     sp = "exec dbo.insert_current_conditions ;"
-else:
+elif dbType == 'postgres':
     sp = "call public.insert_current_conditions();"
+elif dbType == 'mysql':
+     sp = "call Weather_v2.insert_current_conditions()"
+     
 conn.callStoredProcedure(engine, sp)

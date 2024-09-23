@@ -37,7 +37,8 @@ CREATE TABLE CurrentConditions(
  CONSTRAINT PK_CurrentConditions PRIMARY KEY  
     (
         CurrentConditionID ASC
-    )
+    ),
+    UNIQUE KEY (LocationID, last_updated_epoch)
 ); 
 
 
