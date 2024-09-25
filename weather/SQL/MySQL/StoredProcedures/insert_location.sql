@@ -12,7 +12,7 @@ BEGIN
     
     CREATE TEMPORARY TABLE source AS (
     SELECT DISTINCT _postalCode AS PostalCode,
-       jsondata ->> '$.location.name' as name,
+       jsondata ->> '$.location.name' as location_name,
        jsondata ->> '$.location.region' as region,
        jsondata ->> '$.location.country' as country,
        jsondata -> '$.location.lat' as latitude,
@@ -25,7 +25,7 @@ BEGIN
 
     INSERT INTO Weather_v2.Location(PostalCode, name, region, country, latitude, longitude, timezone, local_time_epoch, local_time)
     SELECT DISTINCT _postalCode AS PostalCode,
-		   name,
+		   location_name,
 		   region,
 		   country,
 		   latitude,
@@ -33,15 +33,15 @@ BEGIN
 		   timezone,
 		   local_time_epoch,
 		   local_time
-    FROM source
-    ON DUPLICATE KEY UPDATE name = name,
-                            region = region,
-                            country = country,
-                            latitude = latitude,
-                            longitude = longitude,
-                            timezone = timezone,
-                            local_time_epoch = local_time_epoch,
-                            local_time = local_time;
+    FROM source AS a
+    ON DUPLICATE KEY UPDATE name = location_name,
+                            region = a.region,
+                            country = a.country,
+                            latitude = a.latitude,
+                            longitude = a.longitude,
+                            timezone = a.timezone,
+                            local_time_epoch = a.local_time_epoch,
+                            local_time = a.local_time;
     
 END;
 //
