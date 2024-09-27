@@ -70,6 +70,6 @@ if dbType == 'mssql':
 elif dbType == 'postgres':
     sp = "call public.insert_current_conditions();"
 elif dbType == 'mysql':
-     sp = "call Weather_v2.insert_current_conditions()"
+     sp = "insert into Weather_v2.weatherjsonload(jsondata) values ('" + decodedRetWeatherData + "'); call Weather_v2.insert_current_conditions()"
      
 conn.callStoredProcedure(engine, sp)
