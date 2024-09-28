@@ -68,9 +68,9 @@ engine = conn.getConnection(dbType)
 if dbType == 'mssql':
     sp = "insert_location '" + zipcode + "';"
 elif dbType == 'postgres':
-    sp = "call insert_location('" + zipcode + "');"
+    sp = "call copy_payload_to_table(); call insert_location('" + zipcode + "'); call public.update_json_to_processed();"
 elif dbType == 'mysql':
-     sp = "insert into Weather_v2.weatherjsonload(jsondata) values ('" + decodedRetWeatherData + "'); call Weather_v2.insert_location('" + zipcode + "');"
+     sp = "insert into Weather_v2.weatherjsonload(jsondata) values ('" + decodedRetWeatherData + "'); call Weather_v2.insert_location('" + zipcode + "'); call Weather_v2.update_json_to_processed();"
 
 # print(sp)
 

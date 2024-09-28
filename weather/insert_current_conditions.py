@@ -68,8 +68,8 @@ engine = conn.getConnection(dbType)
 if dbType == 'mssql':
     sp = "exec dbo.insert_current_conditions ;"
 elif dbType == 'postgres':
-    sp = "call public.insert_current_conditions();"
+    sp = "call copy_payload_to_table(); call public.insert_current_conditions(); call public.update_json_to_processed();"
 elif dbType == 'mysql':
-     sp = "insert into Weather_v2.weatherjsonload(jsondata) values ('" + decodedRetWeatherData + "'); call Weather_v2.insert_current_conditions()"
+     sp = "insert into Weather_v2.weatherjsonload(jsondata) values ('" + decodedRetWeatherData + "'); call Weather_v2.insert_current_conditions(); call Weather_v2.update_json_to_processed();"
      
 conn.callStoredProcedure(engine, sp)

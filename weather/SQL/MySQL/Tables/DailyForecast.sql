@@ -21,11 +21,12 @@ CREATE TABLE DailyForecast (
     avgvis_km NUMERIC(6, 2) NULL,
     avgvis_miles NVARCHAR(255) NULL,
     avghumidity NUMERIC(6, 2) NULL,
-    daily_will_it_rain BIT NULL,
+    daily_will_it_rain BOOLEAN NULL,
     daily_chance_of_rain NUMERIC(6, 2) NULL,
-    daily_will_it_snow BIT NULL,
+    daily_will_it_snow BOOLEAN NULL,
     daily_chance_of_snow NUMERIC(6, 2) NULL,
     conditions VARCHAR(50) NULL,
+    uv NUMERIC(6,2) NULL, 
     CONSTRAINT PK_DailyForecast PRIMARY KEY (DailyForecastID ASC),
     UNIQUE KEY (LocationID, forecast_date_epoch)
     ); 
