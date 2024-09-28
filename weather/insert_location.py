@@ -66,7 +66,7 @@ conn = d.DataAccess()
 engine = conn.getConnection(dbType)
 
 if dbType == 'mssql':
-    sp = "insert_location '" + zipcode + "';"
+    sp = "exec copy_payload_to_table; exec insert_location '" + zipcode + "'; exec update_json_to_processed;"
 elif dbType == 'postgres':
     sp = "call copy_payload_to_table(); call insert_location('" + zipcode + "'); call public.update_json_to_processed();"
 elif dbType == 'mysql':

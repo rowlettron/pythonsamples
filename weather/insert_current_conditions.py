@@ -66,7 +66,7 @@ conn = d.DataAccess()
 engine = conn.getConnection(dbType)
 
 if dbType == 'mssql':
-    sp = "exec dbo.insert_current_conditions ;"
+    sp = "exec copy_payload_to_table; exec dbo.insert_current_conditions;; exec update_json_to_processed;"
 elif dbType == 'postgres':
     sp = "call copy_payload_to_table(); call public.insert_current_conditions(); call public.update_json_to_processed();"
 elif dbType == 'mysql':

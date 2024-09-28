@@ -66,7 +66,7 @@ conn = d.DataAccess()
 engine = conn.getConnection(dbType)
 
 if dbType == 'mssql':
-    sp = "exec dbo.insert_daily_forecast "
+    sp = "exec copy_payload_to_table; exec dbo.insert_daily_forecast; exec update_json_to_processed; "
 elif dbType == 'postgres':
     sp = 'call copy_payload_to_table(); call public.insert_daily_forecast(); call public.update_json_to_processed();'
 elif dbType == 'mysql':
