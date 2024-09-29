@@ -1,3 +1,6 @@
+USE Weather_v2;
+GO 
+
 /*
  * DROP PROC dbo.copy_payload_to_table
  */
@@ -11,7 +14,7 @@ BEGIN
 END
 go
 
-CREATE PROC dbo.copy_payload_to_table
+CREATE PROC dbo.copy_payload_to_table 
 AS
 
 /*****************************************************************************
@@ -26,13 +29,20 @@ AS
 *  ----------    --------------------    -------------------------------------
 ******************************************************************************/
 BEGIN
+
     DROP TABLE IF EXISTS #alpha;
 
     CREATE TABLE #alpha (JsonData nvarchar(max));
 
-    BULK INSERT #alpha 
-    FROM 'C:\Containers\PostgreSQL\datashare\file.txt' ;
-
+    IF @@SERVERNAME = 'mssql-db'
+    BEGIN 
+        BULK INSERT #alpha FROM '/datashare/file.txt';
+    END 
+    ELSE 
+    BEGIN 
+        BULK INSERT #alpha FROM 'C:\Containers\PostgreSQL\datashare\file.txt' ;
+    END 
+    
     INSERT INTO dbo.WeatherJsonLoad(JsonData)
     SELECT JsonData FROM #alpha;
 

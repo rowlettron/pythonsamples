@@ -37,6 +37,7 @@ CREATE TABLE dbo.DailyForecast (
     daily_chance_of_snow NUMERIC(6, 2) NULL,
     conditions VARCHAR(50) NULL,
     avgmis_miles NUMERIC(6, 2) NULL,
+    uv NUMERIC(6,2) NULL, 
     CONSTRAINT PK_DailyForecast PRIMARY KEY CLUSTERED (DailyForecastID ASC)
     )
 GO

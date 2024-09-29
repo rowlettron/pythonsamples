@@ -2,6 +2,7 @@ import sqlalchemy as sa
 from sqlalchemy import create_engine
 from sqlalchemy import URL
 import os
+from sys import platform
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -25,9 +26,16 @@ class DataAccess:
     
     def getConnection(self, dbType):
 
+        print(platform)
+
         self.dbType = dbType
+        if platform == 'darwin':
+            self.host = 'localhost'
+        else:
+            self.host = 'mylaptop'
+
         if self.dbType == 'mssql':
-           self.host = 'mylaptop'
+           
            self.port = '1433'
 
            connect_url = URL.create(

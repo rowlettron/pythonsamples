@@ -1,3 +1,6 @@
+USE Weather_v2;
+go
+
 /*
  * DROP PROC dbo.update_json_to_processed
  */

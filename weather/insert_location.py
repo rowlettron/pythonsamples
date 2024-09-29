@@ -32,12 +32,16 @@ def clearConsole():
 if platform == "darwin":
     os_platform = "Mac"
     clearConsole()
-    filePath = '/Users/ron/Containers/PostgreSQL/datashare/file.txt'
+    if dbType == 'mssql':
+        filePath = '/Users/ron/Documents/GitHub/DockerContainers/MSSql/datashare/file.txt'
+    else:
+        filePath = '/Users/ron/Containers/PostgreSQL/datashare/file.txt'
 else:
     os_platform = "Windows"
     clearConsole()
     filePath = 'C:/Containers/PostgreSQL/datashare/file.txt'
 
+print(filePath)
 
 # print(zipcode)
 # secureObject = s.security()
@@ -66,7 +70,7 @@ conn = d.DataAccess()
 engine = conn.getConnection(dbType)
 
 if dbType == 'mssql':
-    sp = "exec copy_payload_to_table; exec insert_location '" + zipcode + "'; exec update_json_to_processed;"
+    sp = "exec copy_payload_to_table; exec Weather_v2.dbo.insert_location '" + zipcode + "'; exec Weather_v2.dbo.update_json_to_processed;"
 elif dbType == 'postgres':
     sp = "call copy_payload_to_table(); call insert_location('" + zipcode + "'); call public.update_json_to_processed();"
 elif dbType == 'mysql':

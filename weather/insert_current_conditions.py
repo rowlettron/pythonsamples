@@ -32,7 +32,10 @@ def clearConsole():
 if platform == "darwin":
     os_platform = "Mac"
     clearConsole()
-    filePath = '/Users/ron/Containers/PostgreSQL/datashare/file.txt'
+    if dbType == 'mssql':
+        filePath = '/Users/ron/Documents/GitHub/DockerContainers/MSSql/datashare/file.txt'
+    else:
+        filePath = '/Users/ron/Containers/PostgreSQL/datashare/file.txt'
 else:
     os_platform = "Windows"
     clearConsole()
